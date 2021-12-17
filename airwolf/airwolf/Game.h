@@ -11,6 +11,13 @@
 /// </summary>
 #include <SFML/Graphics.hpp>
 
+enum class Direction
+{
+	None,
+	Left,
+	Right
+};
+
 class Game
 {
 public:
@@ -25,12 +32,14 @@ private:
 
 	void processEvents();
 	void processKeys(sf::Event t_event);
+	void procressMouse(sf::Event t_event);
 	void update(sf::Time t_deltaTime);
 	void render();
 	
 	void setupFontAndText();
 	void setupSprite();
 	void animateHelo();
+	void move();
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -42,6 +51,10 @@ private:
 	int m_currentFrame = 0; // helo frame to draw
 	float m_currentFrameCounter = 0.0f; // frame value float
 	float m_frameIncrement =0.24; // add to counter each gsmre frame 60fps
+
+	sf::Vector2f m_location{ 400.0f,300.0f };
+	sf::Vector2f m_velocity{ 0.0f,0.0f };
+	Direction m_facing = Direction::Right;
 
 
 };

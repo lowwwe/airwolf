@@ -77,6 +77,10 @@ void Game::processEvents()
 		{
 			processKeys(newEvent);
 		}
+		if (sf::Event::MouseButtonPressed == newEvent.type)
+		{
+			procressMouse(newEvent);
+		}
 	}
 }
 
@@ -93,6 +97,23 @@ void Game::processKeys(sf::Event t_event)
 	}
 }
 
+void Game::procressMouse(sf::Event t_event)
+{
+	if (sf::Mouse::Middle == t_event.mouseButton.button)
+	{
+		if (static_cast<float>(t_event.mouseButton.x) > m_location.x)
+		{
+			m_facing = Direction::Right;
+			m_helicopter.setScale(1.0, 2.0);
+		}
+		else
+		{
+			m_facing = Direction::Left;
+			m_helicopter.setScale(-1.0, 0.50);
+		}
+	}
+}
+
 /// <summary>
 /// Update the game world
 /// </summary>
@@ -104,6 +125,7 @@ void Game::update(sf::Time t_deltaTime)
 		m_window.close();
 	}
 	animateHelo();
+	move();
 }
 
 /// <summary>
@@ -148,7 +170,7 @@ void Game::setupSprite()
 	}
 	m_helicopter.setTexture(m_heloTexture);
 	m_helicopter.setTextureRect(sf::IntRect(0, 128, 180, 64));
-	m_helicopter.setPosition(400.0f, 300.0f);
+	m_helicopter.setPosition(m_location);
 	m_helicopter.setOrigin(90.0f, 32.0f);
 }
 
@@ -168,4 +190,11 @@ void Game::animateHelo()
 
 			m_helicopter.setTextureRect(sf::IntRect(0, 64 * m_currentFrame, 180, 64));
 	}
+}
+
+void Game::move()
+{
+	m_location += m_velocity;
+	m_helicopter.setPosition(m_location);
+
 }
