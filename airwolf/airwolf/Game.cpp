@@ -99,18 +99,30 @@ void Game::processKeys(sf::Event t_event)
 
 void Game::procressMouse(sf::Event t_event)
 {
+	float lenght = 0.0f;
+	sf::Vector2f displacement(0.0f, 0.0f);
 	if (sf::Mouse::Middle == t_event.mouseButton.button)
 	{
+		displacement.x = static_cast<float>(t_event.mouseButton.x) - m_location.x;
+		displacement.y = static_cast<float>(t_event.mouseButton.y) - m_location.y;
+		m_target.x = t_event.mouseButton.x;
+		m_target.y = t_event.mouseButton.y;
+		lenght = std::sqrtf((displacement.x * displacement.x) + (displacement.y * displacement.y));
+		displacement = displacement / lenght;
+		displacement = displacement * m_speed;
+		m_velocity = displacement;
 		if (static_cast<float>(t_event.mouseButton.x) > m_location.x)
 		{
 			m_facing = Direction::Right;
-			m_helicopter.setScale(1.0, 2.0);
+			m_helicopter.setScale(1.0, 1.0);			
 		}
 		else
 		{
 			m_facing = Direction::Left;
-			m_helicopter.setScale(-1.0, 0.50);
+			m_helicopter.setScale(-1.0, 1.0);
+			
 		}
+
 	}
 }
 
@@ -194,7 +206,17 @@ void Game::animateHelo()
 
 void Game::move()
 {
-	m_location += m_velocity;
-	m_helicopter.setPosition(m_location);
-
+	if (m_facing != Direction::None)
+	{
+		m_location += m_velocity;
+		m_helicopter.setPosition(m_location);
+		if (m_facing == Direction::Right && m_location.x > m_target.x)
+		{
+			m_facing = Direction::None;
+		}
+		if (m_facing == Direction::Left && m_location.x < m_target.x)
+		{
+			m_facing = Direction::None;
+		}
+	}
 }

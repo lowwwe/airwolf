@@ -54,7 +54,9 @@ private:
 
 	sf::Vector2f m_location{ 400.0f,300.0f };
 	sf::Vector2f m_velocity{ 0.0f,0.0f };
-	Direction m_facing = Direction::Right;
+	sf::Vector2f m_target{ 0.0f,0.0f };
+	Direction m_facing = Direction::None;
+	float m_speed = 3.5f; // speed in straight line
 
 
 };
