@@ -10,6 +10,7 @@
 /// Don't forget the endif at the bottom
 /// </summary>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 enum class Direction
 {
@@ -40,6 +41,8 @@ private:
 	void setupSprite();
 	void animateHelo();
 	void move();
+	void setupAudio();
+
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -57,6 +60,9 @@ private:
 	sf::Vector2f m_target{ 0.0f,0.0f };
 	Direction m_facing = Direction::None;
 	float m_speed = 3.5f; // speed in straight line
+
+	sf::SoundBuffer m_buffer;
+	sf::Sound m_sound;
 
 
 };

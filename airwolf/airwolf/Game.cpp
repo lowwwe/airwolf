@@ -22,6 +22,7 @@ Game::Game() :
 {
 	setupFontAndText(); // load font 
 	setupSprite(); // load texture
+	setupAudio();
 }
 
 /// <summary>
@@ -111,6 +112,7 @@ void Game::procressMouse(sf::Event t_event)
 		displacement = displacement / lenght;
 		displacement = displacement * m_speed;
 		m_velocity = displacement;
+		m_frameIncrement = 0.5;
 		if (static_cast<float>(t_event.mouseButton.x) > m_location.x)
 		{
 			m_facing = Direction::Right;
@@ -213,10 +215,22 @@ void Game::move()
 		if (m_facing == Direction::Right && m_location.x > m_target.x)
 		{
 			m_facing = Direction::None;
+			m_frameIncrement = 0.25;
+			m_sound.play();
 		}
 		if (m_facing == Direction::Left && m_location.x < m_target.x)
 		{
 			m_facing = Direction::None;
+			m_frameIncrement = 0.25;
 		}
 	}
+}
+
+void Game::setupAudio()
+{
+	if (!m_buffer.loadFromFile("ASSETS\\AUDIO\\mario.wav"))
+	{
+		std::cout << "problem with audio";
+	}
+	m_sound.setBuffer(m_buffer);
 }
