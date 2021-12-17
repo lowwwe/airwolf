@@ -30,6 +30,7 @@ private:
 	
 	void setupFontAndText();
 	void setupSprite();
+	void animateHelo();
 
 	sf::RenderWindow m_window; // main SFML window
 	sf::Font m_ArialBlackfont; // font used by message
@@ -37,6 +38,11 @@ private:
 	sf::Texture m_heloTexture; // texture for helo sprite sheet
 	sf::Sprite m_helicopter; // sprite for helo
 	bool m_exitGame; // control exiting game
+
+	int m_currentFrame = 0; // helo frame to draw
+	float m_currentFrameCounter = 0.0f; // frame value float
+	float m_frameIncrement =0.24; // add to counter each gsmre frame 60fps
+
 
 };
 

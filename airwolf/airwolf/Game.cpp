@@ -103,6 +103,7 @@ void Game::update(sf::Time t_deltaTime)
 	{
 		m_window.close();
 	}
+	animateHelo();
 }
 
 /// <summary>
@@ -149,4 +150,22 @@ void Game::setupSprite()
 	m_helicopter.setTextureRect(sf::IntRect(0, 128, 180, 64));
 	m_helicopter.setPosition(400.0f, 300.0f);
 	m_helicopter.setOrigin(90.0f, 32.0f);
+}
+
+void Game::animateHelo()
+{
+	int newFrameNumber = 0; // new current frame
+	m_currentFrameCounter += m_frameIncrement;
+	newFrameNumber = static_cast<int>(m_currentFrameCounter);
+	newFrameNumber = newFrameNumber % 4; // frames 0,1,2,3
+	if (newFrameNumber != m_currentFrame) // change the frame
+	{
+		m_currentFrame = newFrameNumber;
+			//sf::IntRect(0, 0, 180, 64) // frame 0
+			//sf::IntRect(0, 64, 180, 64) // 1
+			//sf::IntRect(0, 128, 180, 64) // 2
+			//sf::IntRect(0, 196, 180, 64) // 3
+
+			m_helicopter.setTextureRect(sf::IntRect(0, 64 * m_currentFrame, 180, 64));
+	}
 }
