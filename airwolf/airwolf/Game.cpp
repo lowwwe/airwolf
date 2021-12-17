@@ -112,7 +112,7 @@ void Game::render()
 {
 	m_window.clear(sf::Color::White);
 	m_window.draw(m_welcomeMessage);
-	m_window.draw(m_logoSprite);
+	m_window.draw(m_helicopter);
 	m_window.display();
 }
 
@@ -141,11 +141,12 @@ void Game::setupFontAndText()
 /// </summary>
 void Game::setupSprite()
 {
-	if (!m_logoTexture.loadFromFile("ASSETS\\IMAGES\\SFML-LOGO.png"))
+	if (!m_heloTexture.loadFromFile("ASSETS\\IMAGES\\helicopter.png"))
 	{
-		// simple error message if previous call fails
-		std::cout << "problem loading logo" << std::endl;
+		std::cout << "problem with png file for helo" << std::endl;
 	}
-	m_logoSprite.setTexture(m_logoTexture);
-	m_logoSprite.setPosition(300.0f, 180.0f);
+	m_helicopter.setTexture(m_heloTexture);
+	m_helicopter.setTextureRect(sf::IntRect(0, 128, 180, 64));
+	m_helicopter.setPosition(400.0f, 300.0f);
+	m_helicopter.setOrigin(90.0f, 32.0f);
 }
