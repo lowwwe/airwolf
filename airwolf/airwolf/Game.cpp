@@ -113,6 +113,7 @@ void Game::procressMouse(sf::Event t_event)
 		displacement = displacement * m_speed;
 		m_velocity = displacement;
 		m_frameIncrement = 0.5;
+		m_sound.setPitch(1.0f);
 		if (static_cast<float>(t_event.mouseButton.x) > m_location.x)
 		{
 			m_facing = Direction::Right;
@@ -163,13 +164,13 @@ void Game::setupFontAndText()
 		std::cout << "problem loading arial black font" << std::endl;
 	}
 	m_welcomeMessage.setFont(m_ArialBlackfont);
-	m_welcomeMessage.setString("SFML Game");
-	m_welcomeMessage.setStyle(sf::Text::Underlined | sf::Text::Italic | sf::Text::Bold);
+	m_welcomeMessage.setString("Use middle button");
+	
 	m_welcomeMessage.setPosition(40.0f, 40.0f);
-	m_welcomeMessage.setCharacterSize(80U);
-	m_welcomeMessage.setOutlineColor(sf::Color::Red);
+	m_welcomeMessage.setCharacterSize(50U);
+	
 	m_welcomeMessage.setFillColor(sf::Color::Black);
-	m_welcomeMessage.setOutlineThickness(3.0f);
+	
 
 }
 
@@ -216,21 +217,25 @@ void Game::move()
 		{
 			m_facing = Direction::None;
 			m_frameIncrement = 0.25;
-			m_sound.play();
+			m_sound.setPitch(0.5f);			
 		}
 		if (m_facing == Direction::Left && m_location.x < m_target.x)
 		{
 			m_facing = Direction::None;
 			m_frameIncrement = 0.25;
+			m_sound.setPitch(0.5f);
 		}
 	}
 }
 
 void Game::setupAudio()
 {
-	if (!m_buffer.loadFromFile("ASSETS\\AUDIO\\mario.wav"))
+	if (!m_buffer.loadFromFile("ASSETS\\AUDIO\\helicopter.wav"))
 	{
 		std::cout << "problem with audio";
 	}
 	m_sound.setBuffer(m_buffer);
+	m_sound.setLoop(true);
+	m_sound.setPitch(0.5f);
+	m_sound.play();
 }
